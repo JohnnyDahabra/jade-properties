@@ -103,12 +103,12 @@ const Hero = () => {
           >
             Get My Cash Offer Today
           </MagneticButton>
-          <div className="flex items-center gap-3 text-sm text-cream/70 font-mono mt-4 sm:mt-0 sm:py-4">
-            <span className="relative flex h-3 w-3">
+          <div className="flex items-center gap-3 text-sm text-cream/70 font-mono mt-4 sm:mt-0 sm:py-4 break-words whitespace-normal text-center sm:text-left flex-wrap max-w-full">
+            <span className="relative flex h-3 w-3 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
             </span>
-            OFFERS_ACTIVE — 24HR_RESPONSE
+            <span>OFFERS_ACTIVE — 24HR_RESPONSE</span>
           </div>
         </div>
       </div>
@@ -294,15 +294,15 @@ const Philosophy = () => {
       <img
         src="https://images.unsplash.com/photo-1512915922686-57c11dde9b6b?q=80&w=2946&auto=format&fit=crop"
         alt="Dark aerial neighborhood"
-        className="absolute inset-0 w-full h-full object-cover opacity-10 grayscale sticky top-0"
+        className="absolute inset-0 w-full h-full object-cover opacity-10 grayscale"
       />
       <div className="relative z-10 w-full max-w-5xl mx-auto text-center" ref={textRef}>
-        <p className="font-sans text-[5vw] sm:text-xl md:text-3xl text-cream/70 leading-relaxed max-w-4xl mx-auto flex flex-wrap justify-center gap-x-1 sm:gap-x-2 gap-y-1 mb-8 px-2 sm:px-0">
+        <p className="font-sans text-[4.5vw] sm:text-xl md:text-3xl text-cream/70 leading-relaxed max-w-4xl mx-auto flex flex-wrap justify-center gap-x-1 sm:gap-x-2 gap-y-1 mb-8 px-2 sm:px-0">
           {quote.map((word, i) => (
             <span key={i} className="word inline-block">{word}</span>
           ))}
         </p>
-        <div className="word font-drama italic text-[14vw] sm:text-6xl md:text-9xl text-gold mt-6 leading-none break-words w-full px-2 sm:px-0">
+        <div className="word font-drama italic text-[12.5vw] sm:text-6xl md:text-9xl text-gold mt-6 leading-none break-words w-full px-2 sm:px-0">
           your<br className="sm:hidden" /> timeline.
         </div>
       </div>
@@ -695,12 +695,12 @@ const Footer = () => {
           </div>
           <p className="font-drama italic text-2xl text-cream/70 mb-8">Fast. Fair. Hassle-Free.</p>
 
-          <div className="flex items-center gap-3 text-sm text-gold font-mono bg-black/20 inline-flex px-4 py-2 rounded-lg border border-white/5">
-            <span className="relative flex h-2 w-2">
+          <div className="flex items-center gap-3 text-sm text-gold font-mono bg-black/20 inline-flex px-4 py-2 rounded-lg border border-white/5 whitespace-normal break-words max-w-full flex-wrap">
+            <span className="relative flex h-2 w-2 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
             </span>
-            OFFERS_ACTIVE — 24HR_RESPONSE
+            <span>OFFERS_ACTIVE — 24HR_RESPONSE</span>
           </div>
         </div>
 
@@ -726,7 +726,7 @@ const Footer = () => {
 
 export default function App() {
   return (
-    <div className="relative overflow-x-hidden">
+    <div className="relative overflow-x-hidden w-full max-w-[100vw]">
       <Navbar />
       <Hero />
       <HowItWorks />

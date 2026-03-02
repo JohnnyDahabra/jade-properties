@@ -3,11 +3,26 @@
 @tailwind utilities;
 
 @layer base {
+
+  html,
   body {
-    @apply bg-cream text-charcoal font-sans antialiased overflow-x-hidden;
+    max-width: 100vw;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+    overscroll-behavior-x: none;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
+
+  body {
+    @apply bg-cream text-charcoal font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-outfit tracking-tight;
   }
 }
@@ -23,6 +38,7 @@
   .btn-magnetic {
     transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
+
   .btn-magnetic:hover {
     transform: scale(1.03);
   }
