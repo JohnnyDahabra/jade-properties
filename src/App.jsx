@@ -1,0 +1,741 @@
+import React, { useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { UploadCloud, CheckCircle, Star, X, Check, MapPin, MousePointer2, Activity } from 'lucide-react';
+
+gsap.registerPlugin(ScrollTrigger);
+
+// --- UTILS --- //
+const MagneticButton = ({ children, className, onClick, type = "button" }) => {
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      className={`btn-magnetic relative overflow-hidden group transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] inline-block ${className}`}
+    >
+      <span className="relative z-10 flex items-center justify-center gap-2">{children}</span>
+      <span className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] z-0 rounded-[inherit]" />
+    </button>
+  );
+};
+
+// --- COMPONENTS --- //
+
+const Navbar = () => {
+  const navRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        start: "top -50",
+        end: 99999,
+        toggleClass: { className: 'nav-scrolled', targets: navRef.current },
+      });
+    });
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <nav
+      ref={navRef}
+      className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl px-6 py-4 rounded-full transition-all duration-500 text-white flex items-center justify-between [&.nav-scrolled]:bg-cream/80 [&.nav-scrolled]:backdrop-blur-xl [&.nav-scrolled]:text-jade [&.nav-scrolled]:border [&.nav-scrolled]:border-jade/10 [&.nav-scrolled]:shadow-sm"
+    >
+      <div className="flex items-center gap-3">
+        <div className="w-4 h-4 bg-jade shadow-sm rounded-sm shrink-0"></div>
+        <span className="font-outfit font-semibold text-lg tracking-tight">Jade Properties</span>
+      </div>
+      <div className="hidden md:flex items-center gap-8 text-sm font-medium">
+        <a href="#how-it-works" className="hover:-translate-y-[1px] transition-transform">How It Works</a>
+        <a href="#philosophy" className="hover:-translate-y-[1px] transition-transform">Philosophy</a>
+        <a href="#process" className="hover:-translate-y-[1px] transition-transform">Process</a>
+      </div>
+      <MagneticButton
+        onClick={() => document.getElementById('offer-portal').scrollIntoView({ behavior: 'smooth' })}
+        className="bg-gold text-white font-medium px-5 py-2.5 rounded-full text-sm shadow-md"
+      >
+        Get a Cash Offer
+      </MagneticButton>
+    </nav>
+  );
+};
+
+const Hero = () => {
+  const containerRef = useRef(null);
+  const textRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline();
+      tl.from(".hero-el", {
+        y: 40,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.08,
+        ease: "power3.out",
+        delay: 0.2
+      });
+    }, containerRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={containerRef} className="relative w-full h-[100dvh] flex items-end pb-24 md:pb-32 px-6 md:px-16 overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2940&auto=format&fit=crop"
+          alt="Aerial view of beautiful suburban homes"
+          className="w-full h-full object-cover scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-jade/30" />
+      </div>
+
+      <div className="relative z-10 w-full max-w-4xl text-white">
+        <p className="hero-el font-sans font-medium text-lg md:text-xl text-cream/90 uppercase tracking-widest mb-4">
+          Selling your home is the
+        </p>
+        <h1 className="hero-el font-drama italic text-6xl md:text-8xl lg:text-9xl leading-[1.05] tracking-tight mb-10">
+          easiest decision<br />you'll make.
+        </h1>
+        <div className="hero-el flex flex-col sm:flex-row gap-6 items-start">
+          <MagneticButton
+            onClick={() => document.getElementById('offer-portal').scrollIntoView({ behavior: 'smooth' })}
+            className="bg-gold text-white text-lg font-medium px-8 py-4 rounded-[2rem] shadow-lg shadow-gold/20"
+          >
+            Get My Cash Offer Today
+          </MagneticButton>
+          <div className="flex items-center gap-3 text-sm text-cream/70 font-mono mt-4 sm:mt-0 sm:py-4">
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+            </span>
+            OFFERS_ACTIVE — 24HR_RESPONSE
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const ShufflerCard = () => {
+  const cards = ["Single Family", "Multi-Family", "Inherited Property"];
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActive(prev => (prev + 1) % cards.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="h-full min-h-[250px] relative flex items-center justify-center p-8 bg-cream border border-charcoal/5 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
+      <div className="absolute top-6 left-6 z-10">
+        <h3 className="font-outfit font-semibold text-xl text-jade">Property Intake</h3>
+        <p className="text-sm text-charcoal/60 mt-1">We buy all kinds of homes.</p>
+      </div>
+      <div className="relative w-full h-[120px] mt-12 perspective-[1000px]">
+        {cards.map((label, i) => {
+          const offset = (i - active + cards.length) % cards.length;
+          const isActive = offset === 0;
+          return (
+            <div
+              key={label}
+              className="absolute w-full py-4 text-center rounded-2xl bg-white border border-charcoal/10 font-medium text-lg text-charcoal shadow-sm transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+              style={{
+                top: '50%',
+                left: '50%',
+                transform: `translateX(-50%) translateY(calc(-50% + ${offset * 15}px)) translateZ(${-offset * 30}px) scale(${1 - offset * 0.05})`,
+                opacity: isActive ? 1 : 1 - offset * 0.3,
+                zIndex: cards.length - offset,
+              }}
+            >
+              {label}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+const TypewriterCard = () => {
+  const [text, setText] = useState("");
+  const fullText = "Analyzing 123 Oak St...\nComps pulled.\nARV calculated.\nCash offer ready:\n$247,000.";
+
+  useEffect(() => {
+    let current = 0;
+    const interval = setInterval(() => {
+      setText(fullText.slice(0, current));
+      current++;
+      if (current > fullText.length + 15) {
+        current = 0; // loop with pause
+      }
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="h-full min-h-[250px] relative flex flex-col p-8 bg-cream border border-charcoal/5 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
+      <div className="flex justify-between items-start z-10 mb-8">
+        <div>
+          <h3 className="font-outfit font-semibold text-xl text-jade">Live Telemetry</h3>
+          <p className="text-sm text-charcoal/60 mt-1">Instant offer generation.</p>
+        </div>
+        <div className="flex items-center gap-2 bg-white px-3 py-1 rounded-full text-xs font-medium text-jade border border-jade/10">
+          <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse"></span>
+          Live
+        </div>
+      </div>
+      <div className="flex-1 bg-charcoal/5 rounded-xl p-4 font-mono text-sm leading-relaxed text-jade/80 relative">
+        {text.split('\n').map((line, i) => (
+          <div key={i}>{line}{i === text.split('\n').length - 1 && text.length <= fullText.length && <span className="inline-block w-2 bg-gold animate-pulse ml-1">&nbsp;</span>}</div>
+        ))}
+        {text.length > fullText.length && (
+          <div><span className="inline-block w-2 bg-gold animate-pulse mt-1">&nbsp;</span></div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const SchedulerCard = () => {
+  const cursorRef = useRef(null);
+  const containerRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ repeat: -1 });
+
+      tl.to(cursorRef.current, { x: 80, y: 40, duration: 1, ease: "power2.inOut", delay: 1 })
+        .to('.day-target', { backgroundColor: '#C9933A', color: 'white', duration: 0.2 })
+        .to(cursorRef.current, { scale: 0.8, duration: 0.1, yoyo: true, repeat: 1 })
+        .to(cursorRef.current, { x: 120, y: 90, duration: 1, ease: "power2.inOut", delay: 0.5 })
+        .to('.confirm-btn', { scale: 1.05, duration: 0.2 })
+        .to('.confirm-btn', { backgroundColor: '#1B4332', color: 'white', duration: 0.2 })
+        .to(cursorRef.current, { opacity: 0, duration: 0.3 })
+        .to('.day-target', { backgroundColor: 'transparent', color: 'inherit', duration: 0.5, delay: 1 })
+        .to('.confirm-btn', { scale: 1, backgroundColor: 'transparent', color: '#1B4332', duration: 0.5 }, "<")
+        .set(cursorRef.current, { x: 0, y: 0, opacity: 1 });
+
+    }, containerRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <div ref={containerRef} className="h-full min-h-[250px] relative flex flex-col p-8 bg-cream border border-charcoal/5 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
+      <div className="z-10 mb-6">
+        <h3 className="font-outfit font-semibold text-xl text-jade">Closing Scheduler</h3>
+        <p className="text-sm text-charcoal/60 mt-1">You pick the date.</p>
+      </div>
+      <div className="relative flex-1 flex flex-col items-center">
+        <div className="grid grid-cols-7 gap-1 w-full text-center text-xs text-charcoal/50 mb-2 font-medium">
+          <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+        </div>
+        <div className="grid grid-cols-7 gap-1 w-full text-center text-sm font-medium text-charcoal mb-4">
+          <div className="p-1">11</div><div className="p-1">12</div><div className="p-1">13</div>
+          <div className="p-1 rounded-md day-target">14</div>
+          <div className="p-1">15</div><div className="p-1">16</div><div className="p-1">17</div>
+        </div>
+        <div className="w-full py-2 border border-jade rounded-xl text-center text-xs font-semibold text-jade confirm-btn transition-colors">
+          Confirm Closing
+        </div>
+        <MousePointer2 ref={cursorRef} className="absolute top-0 left-0 w-5 h-5 text-charcoal fill-charcoal drop-shadow-md z-20" />
+      </div>
+    </div>
+  );
+};
+
+const HowItWorks = () => {
+  return (
+    <section id="how-it-works" className="py-32 px-6 md:px-16 max-w-[1400px] mx-auto">
+      <div className="mb-16 md:mb-24">
+        <h2 className="font-drama italic text-5xl md:text-6xl text-jade mb-4">Interactive Functional Artifacts</h2>
+        <p className="font-sans text-lg text-charcoal/70 max-w-2xl">A seamless process engineered for your convenience. Explore how our digital instruments work for you.</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <ShufflerCard />
+        <TypewriterCard />
+        <SchedulerCard />
+      </div>
+    </section>
+  );
+};
+
+const Philosophy = () => {
+  const textRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const words = textRef.current.querySelectorAll('.word');
+      gsap.fromTo(words,
+        { opacity: 0.1, y: 10 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: textRef.current,
+            start: "top 70%",
+            end: "bottom 40%",
+            scrub: 1,
+          }
+        }
+      );
+    });
+    return () => ctx.revert();
+  }, []);
+
+  const quote = "Most real estate transactions focus on: agents, commissions, and months of waiting. We focus on: ".split(" ");
+
+  return (
+    <section id="philosophy" className="relative w-full min-h-[80vh] flex items-center justify-center bg-charcoal text-white py-32 px-6 overflow-hidden">
+      <img
+        src="https://images.unsplash.com/photo-1512915922686-57c11dde9b6b?q=80&w=2946&auto=format&fit=crop"
+        alt="Dark aerial neighborhood"
+        className="absolute inset-0 w-full h-full object-cover opacity-10 grayscale sticky top-0"
+      />
+      <div className="relative z-10 max-w-5xl mx-auto text-center" ref={textRef}>
+        <p className="font-sans text-xl md:text-3xl text-cream/70 leading-relaxed max-w-4xl mx-auto flex flex-wrap justify-center gap-x-2 gap-y-1 mb-8">
+          {quote.map((word, i) => (
+            <span key={i} className="word inline-block">{word}</span>
+          ))}
+        </p>
+        <div className="word font-drama italic text-6xl md:text-9xl text-gold mt-6 leading-none">
+          your timeline.
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const ProcessCard = ({ title, desc, icon: Icon, index }) => {
+  return (
+    <div className="process-card sticky top-0 h-screen w-full flex items-center justify-center origin-top">
+      <div className="w-[90%] max-w-5xl bg-cream rounded-[3rem] p-12 md:p-24 shadow-2xl flex flex-col md:flex-row items-center gap-16 border border-white/50">
+        <div className="flex-1">
+          <span className="text-gold font-mono text-sm tracking-widest font-semibold block mb-6">PHASE 0{index}</span>
+          <h2 className="font-outfit text-4xl md:text-6xl text-jade font-semibold mb-6 tracking-tight">{title}</h2>
+          <p className="text-charcoal/70 text-lg md:text-xl font-sans leading-relaxed">{desc}</p>
+        </div>
+        <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-white flex items-center justify-center shadow-inner shrink-0 relative overflow-hidden">
+          {Icon}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Process = () => {
+  const containerRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const cards = gsap.utils.toArray('.process-card');
+
+      cards.forEach((card, i) => {
+        if (i === cards.length - 1) return;
+
+        ScrollTrigger.create({
+          trigger: card,
+          start: "top top",
+          endTrigger: cards[cards.length - 1],
+          end: "top top",
+          pin: true,
+          pinSpacing: false,
+          scrub: true,
+          animation: gsap.to(card.querySelector('div'), {
+            scale: 0.9,
+            opacity: 0.5,
+            filter: "blur(20px)",
+            ease: "none"
+          })
+        });
+      });
+    }, containerRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section id="process" ref={containerRef} className="relative bg-white pb-[20vh]">
+      <ProcessCard
+        index={1}
+        title="Tell Us About Your Property"
+        desc="Fill out our simple form. No obligation, no agent fees. We just need the basic details to start our analysis."
+        icon={<div className="w-24 h-24 border-2 border-jade/20 rounded-xl rotate-45 animate-[spin_10s_linear_infinite]" />}
+      />
+      <ProcessCard
+        index={2}
+        title="Receive Your Cash Offer"
+        desc="We analyze your home and send a fair cash offer within 24 hours. Using real-time local telemetry, our offer is accurate and immediate."
+        icon={
+          <div className="relative w-full h-full p-6">
+            <div className="absolute inset-0 grid grid-cols-4 grid-rows-4 gap-1 opacity-10">
+              {[...Array(16)].map((_, i) => <div key={i} className="border border-jade rounded-sm" />)}
+            </div>
+            <div className="w-full h-1 bg-gold absolute left-0 top-0 shadow-[0_0_15px_#C9933A] animate-[ping_3s_ease-in-out_infinite_alternate]" style={{ top: '50%' }} />
+          </div>
+        }
+      />
+      <ProcessCard
+        index={3}
+        title="Close On Your Terms"
+        desc="Pick your closing date. We handle all the paperwork. You walk away with cash on the exact timeline you choose."
+        icon={<Activity className="w-24 h-24 text-jade mix-blend-multiply opacity-50" strokeWidth={1} />}
+      />
+    </section>
+  );
+};
+
+const PropertyForm = () => {
+  const [formData, setFormData] = useState({
+    name: '', phone: '', email: '',
+    street: '', city: '', state: '', zip: '',
+    type: '', beds: '', baths: '', condition: '', reason: '', value: '', notes: ''
+  });
+  const [photos, setPhotos] = useState([]);
+  const [errors, setErrors] = useState({});
+  const [status, setStatus] = useState('idle'); // idle, loading, success
+
+  const handleChange = (e) => setFormData(p => ({ ...p, [e.target.name]: e.target.value }));
+
+  const handlePhotoUpload = (e) => {
+    const files = Array.from(e.target.files);
+    console.log("Uploading files:", files);
+    Promise.all(files.map(file => {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve({ file, url: e.target.result });
+        reader.readAsDataURL(file);
+      });
+    })).then(newPhotos => setPhotos(p => [...p, ...newPhotos]));
+  };
+
+  const removePhoto = (index) => setPhotos(p => p.filter((_, i) => i !== index));
+
+  const validate = () => {
+    const newErrs = {};
+    if (!formData.name) newErrs.name = "Required";
+    if (!formData.phone) newErrs.phone = "Required";
+    if (!formData.email) newErrs.email = "Required";
+    if (!formData.street) newErrs.street = "Required";
+    if (!formData.condition) newErrs.condition = "Please select condition";
+    setErrors(newErrs);
+    return Object.keys(newErrs).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+    setStatus('loading');
+    setTimeout(() => setStatus('success'), 1500);
+  };
+
+  if (status === 'success') {
+    return (
+      <div className="bg-cream rounded-[3rem] p-12 md:p-24 text-center border border-charcoal/5 shadow-2xl flex flex-col items-center">
+        <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-8 shadow-sm">
+          <CheckCircle className="w-12 h-12 text-jade" />
+        </div>
+        <h3 className="font-drama italic text-5xl text-jade mb-4">Offer Requested</h3>
+        <p className="text-xl text-charcoal/70 mb-10 max-w-lg">We received your property details. Our team is running the comps and will be in touch within 24 hours.</p>
+        <MagneticButton onClick={() => setStatus('idle')} className="bg-charcoal text-white px-8 py-3 rounded-full">
+          Submit Another Property
+        </MagneticButton>
+      </div>
+    );
+  }
+
+  const inputCls = "w-full bg-white border border-charcoal/10 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-gold/50 transition-all font-sans placeholder:text-charcoal/30";
+  const labelCls = "block text-sm font-semibold text-jade mb-2";
+
+  return (
+    <form onSubmit={handleSubmit} className="bg-white rounded-[3rem] p-8 md:p-16 shadow-[0_20px_60px_rgb(0,0,0,0.05)] border border-cream">
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8 mb-8">
+        <div>
+          <label className={labelCls}>Full Name</label>
+          <input type="text" name="name" value={formData.name} onChange={handleChange} className={inputCls} placeholder="John Doe" />
+          {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+        </div>
+        <div>
+          <label className={labelCls}>Phone Number</label>
+          <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className={inputCls} placeholder="(555) 123-4567" />
+          {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+        </div>
+        <div className="md:col-span-2">
+          <label className={labelCls}>Email Address</label>
+          <input type="email" name="email" value={formData.email} onChange={handleChange} className={inputCls} placeholder="john@example.com" />
+          {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+        </div>
+      </div>
+
+      <div className="h-px w-full bg-cream my-8" />
+
+      <div className="space-y-8 mb-8">
+        <div>
+          <label className={labelCls}>Property Address</label>
+          <input type="text" name="street" value={formData.street} onChange={handleChange} className={inputCls} placeholder="123 Main St" />
+          {errors.street && <p className="text-red-500 text-xs mt-1">{errors.street}</p>}
+        </div>
+        <div className="grid grid-cols-6 gap-4">
+          <div className="col-span-3 md:col-span-2">
+            <input type="text" name="city" value={formData.city} onChange={handleChange} className={inputCls} placeholder="City" />
+          </div>
+          <div className="col-span-3 md:col-span-2">
+            <input type="text" name="state" value={formData.state} onChange={handleChange} className={inputCls} placeholder="State" />
+          </div>
+          <div className="col-span-6 md:col-span-2">
+            <input type="text" name="zip" value={formData.zip} onChange={handleChange} className={inputCls} placeholder="ZIP Code" />
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div>
+          <label className={labelCls}>Property Type</label>
+          <select name="type" onChange={handleChange} className={inputCls}>
+            <option value="">Select...</option>
+            <option value="Single Family">Single Family</option>
+            <option value="Multi-Family">Multi-Family</option>
+            <option value="Condo/Townhouse">Condo/Townhouse</option>
+            <option value="Land">Land</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div>
+          <label className={labelCls}>Estimated Bedrooms</label>
+          <select name="beds" onChange={handleChange} className={inputCls}>
+            <option value="">Select...</option>
+            <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5+">5+</option>
+          </select>
+        </div>
+        <div>
+          <label className={labelCls}>Estimated Bathrooms</label>
+          <select name="baths" onChange={handleChange} className={inputCls}>
+            <option value="">Select...</option>
+            <option value="1">1</option><option value="1.5">1.5</option><option value="2">2</option><option value="2.5">2.5</option><option value="3+">3+</option>
+          </select>
+        </div>
+      </div>
+
+      <div className="mb-8">
+        <label className={labelCls}>Condition of Property</label>
+        {errors.condition && <p className="text-red-500 text-xs mt-1 mb-2">{errors.condition}</p>}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {["Move-In Ready", "Needs Some Work", "Major Repairs Needed", "Uninhabitable"].map(cond => (
+            <label key={cond} className={`cursor-pointer border rounded-2xl p-4 text-center transition-all ${formData.condition === cond ? 'border-gold bg-gold/5 text-jade font-medium' : 'border-charcoal/10 hover:border-jade/30 text-charcoal/70 bg-white'}`}>
+              <input type="radio" name="condition" value={cond} className="sr-only" onChange={handleChange} />
+              <span className="text-sm">{cond}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div className="h-px w-full bg-cream my-8" />
+
+      <div className="mb-8">
+        <label className={labelCls}>Photo Upload (Optional)</label>
+        <p className="text-xs text-charcoal/50 mb-3">Upload exterior or interior shots to speed up your offer.</p>
+
+        <label className="border-2 border-dashed border-charcoal/10 hover:border-jade rounded-2xl p-8 flex flex-col items-center justify-center cursor-pointer transition-colors bg-cream/30">
+          <UploadCloud className="w-8 h-8 text-jade/50 mb-2" />
+          <span className="text-sm font-medium text-jade">Drag & drop or click to upload</span>
+          <input type="file" multiple accept="image/*" className="hidden" onChange={handlePhotoUpload} />
+        </label>
+
+        {photos.length > 0 && (
+          <div className="flex gap-4 mt-6 overflow-x-auto pb-2">
+            {photos.map((photo, i) => (
+              <div key={i} className="relative w-24 h-24 rounded-xl overflow-hidden shrink-0 group border border-charcoal/10">
+                <img src={photo.url} alt={`Preview ${i}`} className="w-full h-full object-cover" />
+                <button type="button" onClick={() => removePhoto(i)} className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <X className="w-6 h-6 text-white" />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <MagneticButton type="submit" className="w-full bg-gold text-white font-outfit text-xl font-semibold py-5 rounded-2xl shadow-xl shadow-gold/20 flex justify-center items-center">
+        {status === 'loading' ? 'Processing...' : 'Send My Information & Get an Offer →'}
+      </MagneticButton>
+    </form>
+  );
+};
+
+const FormSection = () => {
+  return (
+    <section id="offer-portal" className="bg-cream py-32 px-6">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="font-drama italic text-5xl md:text-7xl text-jade mb-4">Get Your Free Cash Offer</h2>
+          <p className="font-sans text-xl text-charcoal/60">No fees. No commissions. No obligation.</p>
+        </div>
+        <PropertyForm />
+      </div>
+    </section>
+  );
+};
+
+const TestimonialCard = ({ name, city, quote }) => (
+  <div className="bg-cream/50 border border-charcoal/5 rounded-[2rem] p-8 flex flex-col h-full">
+    <div className="flex text-gold mb-6">
+      {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
+    </div>
+    <p className="font-outfit text-lg text-charcoal leading-relaxed mb-8 flex-1">"{quote}"</p>
+    <div>
+      <p className="font-semibold text-jade">{name}</p>
+      <div className="flex items-center gap-1 text-sm text-charcoal/50 mt-1">
+        <MapPin className="w-3 h-3" />
+        {city}
+      </div>
+    </div>
+  </div>
+);
+
+const SocialProof = () => {
+  return (
+    <section className="bg-white py-32 px-6 border-b border-cream">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-20">
+          <h2 className="font-drama italic text-5xl md:text-6xl text-jade mb-4">Trust Signals</h2>
+          <p className="text-charcoal/60 font-sans">Real closed deals. Real homeowners.</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <TestimonialCard
+            name="Sarah Jenkins"
+            city="Austin, TX"
+            quote="I inherited a property that needed major work. Jade gave me a fair offer in 24 hours and we closed in two weeks. Professional from start to finish."
+          />
+          <TestimonialCard
+            name="Michael T."
+            city="Phoenix, AZ"
+            quote="Avoided all the open house headache. The price they offered was exactly what I got at closing. Zero hidden fees."
+          />
+          <TestimonialCard
+            name="David & Elena R."
+            city="Denver, CO"
+            quote="We needed to relocate quickly for a job. The freedom to pick our exact closing date was incredible. Seamless digital process."
+          />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Comparison = () => {
+  return (
+    <section className="bg-white py-32 px-6">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="font-drama italic text-5xl text-jade mb-4">The Comparison</h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-charcoal/10 rounded-[3rem] overflow-hidden border border-charcoal/10">
+          <div className="bg-cream p-12">
+            <h3 className="font-outfit text-2xl text-charcoal/50 mb-8 font-medium">Traditional Sale</h3>
+            <ul className="space-y-6">
+              {[
+                "Agent commissions (6%)",
+                "Months on market",
+                "Costly repairs required",
+                "Uncertain closing date",
+                "Invasive open houses"
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-4 text-charcoal/60">
+                  <X className="w-6 h-6 text-red-400 shrink-0" />
+                  <span className="text-lg">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="bg-jade text-white p-12">
+            <h3 className="font-outfit text-2xl text-gold mb-8 font-semibold">Jade Properties</h3>
+            <ul className="space-y-6">
+              {[
+                "Zero fees or commissions",
+                "Close in 7–21 days",
+                "As-is purchase (no repairs)",
+                "You choose closing date",
+                "Completely private process"
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-4">
+                  <Check className="w-6 h-6 text-gold shrink-0" />
+                  <span className="text-lg text-cream/90">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="flex justify-center mt-16">
+          <MagneticButton
+            onClick={() => document.getElementById('offer-portal').scrollIntoView({ behavior: 'smooth' })}
+            className="bg-jade text-gold px-10 py-5 rounded-full text-xl shadow-xl shadow-jade/10 font-medium"
+          >
+            Get My Offer Now
+          </MagneticButton>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Footer = () => {
+  return (
+    <footer className="bg-jade text-cream rounded-t-[4rem] px-6 py-20 mt-[-2rem] relative z-20">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div className="col-span-1 md:col-span-2">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-6 h-6 bg-gold shadow-sm shrink-0"></div>
+            <span className="font-outfit font-semibold text-3xl tracking-tight">Jade Properties</span>
+          </div>
+          <p className="font-drama italic text-2xl text-cream/70 mb-8">Fast. Fair. Hassle-Free.</p>
+
+          <div className="flex items-center gap-3 text-sm text-gold font-mono bg-black/20 inline-flex px-4 py-2 rounded-lg border border-white/5">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            OFFERS_ACTIVE — 24HR_RESPONSE
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <h4 className="font-outfit font-semibold text-gold tracking-widest text-sm mb-4">NAVIGATION</h4>
+          <a href="#how-it-works" className="text-cream/70 hover:text-white transition-colors">How It Works</a>
+          <a href="#philosophy" className="text-cream/70 hover:text-white transition-colors">Philosophy</a>
+          <a href="#process" className="text-cream/70 hover:text-white transition-colors">Process</a>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <h4 className="font-outfit font-semibold text-gold tracking-widest text-sm mb-4">CONTACT & LEGAL</h4>
+          <span className="text-cream/70 cursor-not-allowed">hello@jadeproperties.com</span>
+          <span className="text-cream/70 cursor-not-allowed">1-800-JADE-NOW</span>
+          <div className="h-4"></div>
+          <a href="#" className="text-cream/40 text-sm hover:text-white transition-colors">Privacy Policy</a>
+          <a href="#" className="text-cream/40 text-sm hover:text-white transition-colors">Terms of Service</a>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default function App() {
+  return (
+    <div className="relative">
+      <Navbar />
+      <Hero />
+      <HowItWorks />
+      <Philosophy />
+      <Process />
+      <FormSection />
+      <SocialProof />
+      <Comparison />
+      <Footer />
+    </div>
+  );
+}
