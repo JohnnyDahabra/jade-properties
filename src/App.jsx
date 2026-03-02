@@ -40,9 +40,9 @@ const Navbar = () => {
       ref={navRef}
       className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl px-6 py-4 rounded-full transition-all duration-500 text-white flex items-center justify-between [&.nav-scrolled]:bg-cream/80 [&.nav-scrolled]:backdrop-blur-xl [&.nav-scrolled]:text-jade [&.nav-scrolled]:border [&.nav-scrolled]:border-jade/10 [&.nav-scrolled]:shadow-sm"
     >
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3">
         <div className="w-4 h-4 bg-jade shadow-sm rounded-sm shrink-0"></div>
-        <span className="font-outfit font-semibold text-lg tracking-tight">Jade Properties</span>
+        <span className="font-outfit font-semibold text-base sm:text-lg tracking-tight hidden sm:block">Jade Properties</span>
       </div>
       <div className="hidden md:flex items-center gap-8 text-sm font-medium">
         <a href="#how-it-works" className="hover:-translate-y-[1px] transition-transform">How It Works</a>
@@ -51,7 +51,7 @@ const Navbar = () => {
       </div>
       <MagneticButton
         onClick={() => document.getElementById('offer-portal').scrollIntoView({ behavior: 'smooth' })}
-        className="bg-gold text-white font-medium px-5 py-2.5 rounded-full text-sm shadow-md"
+        className="bg-gold text-white font-medium px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm shadow-md whitespace-nowrap"
       >
         Get a Cash Offer
       </MagneticButton>
@@ -90,16 +90,16 @@ const Hero = () => {
       </div>
 
       <div className="relative z-10 w-full max-w-4xl text-white">
-        <p className="hero-el font-sans font-medium text-lg md:text-xl text-cream/90 uppercase tracking-widest mb-4">
+        <p className="hero-el font-sans font-medium text-base sm:text-lg md:text-xl text-cream/90 uppercase tracking-widest mb-4">
           Selling your home is the
         </p>
-        <h1 className="hero-el font-drama italic text-6xl md:text-8xl lg:text-9xl leading-[1.05] tracking-tight mb-10">
-          easiest decision<br />you'll make.
+        <h1 className="hero-el font-drama italic text-5xl sm:text-6xl md:text-8xl lg:text-9xl leading-[1.05] tracking-tight mb-8 sm:mb-10 break-words">
+          easiest decision<br className="hidden sm:block" /> you'll make.
         </h1>
-        <div className="hero-el flex flex-col sm:flex-row gap-6 items-start">
+        <div className="hero-el flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
           <MagneticButton
             onClick={() => document.getElementById('offer-portal').scrollIntoView({ behavior: 'smooth' })}
-            className="bg-gold text-white text-lg font-medium px-8 py-4 rounded-[2rem] shadow-lg shadow-gold/20"
+            className="bg-gold text-white text-base sm:text-lg font-medium px-6 py-4 sm:px-8 sm:py-4 rounded-[2rem] shadow-lg shadow-gold/20 flex-shrink-0"
           >
             Get My Cash Offer Today
           </MagneticButton>
@@ -248,9 +248,9 @@ const SchedulerCard = () => {
 const HowItWorks = () => {
   return (
     <section id="how-it-works" className="py-32 px-6 md:px-16 max-w-[1400px] mx-auto">
-      <div className="mb-16 md:mb-24">
-        <h2 className="font-drama italic text-5xl md:text-6xl text-jade mb-4">Interactive Functional Artifacts</h2>
-        <p className="font-sans text-lg text-charcoal/70 max-w-2xl">A seamless process engineered for your convenience. Explore how our digital instruments work for you.</p>
+      <div className="mb-12 sm:mb-16 md:mb-24 break-words">
+        <h2 className="font-drama italic text-4xl sm:text-5xl md:text-6xl text-jade mb-4 leading-tight">Interactive Functional Artifacts</h2>
+        <p className="font-sans text-base sm:text-lg text-charcoal/70 max-w-2xl">A seamless process engineered for your convenience. Explore how our digital instruments work for you.</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <ShufflerCard />
@@ -296,14 +296,14 @@ const Philosophy = () => {
         alt="Dark aerial neighborhood"
         className="absolute inset-0 w-full h-full object-cover opacity-10 grayscale sticky top-0"
       />
-      <div className="relative z-10 max-w-5xl mx-auto text-center" ref={textRef}>
-        <p className="font-sans text-xl md:text-3xl text-cream/70 leading-relaxed max-w-4xl mx-auto flex flex-wrap justify-center gap-x-2 gap-y-1 mb-8">
+      <div className="relative z-10 w-full max-w-5xl mx-auto text-center" ref={textRef}>
+        <p className="font-sans text-[5vw] sm:text-xl md:text-3xl text-cream/70 leading-relaxed max-w-4xl mx-auto flex flex-wrap justify-center gap-x-1 sm:gap-x-2 gap-y-1 mb-8 px-2 sm:px-0">
           {quote.map((word, i) => (
             <span key={i} className="word inline-block">{word}</span>
           ))}
         </p>
-        <div className="word font-drama italic text-6xl md:text-9xl text-gold mt-6 leading-none">
-          your timeline.
+        <div className="word font-drama italic text-[14vw] sm:text-6xl md:text-9xl text-gold mt-6 leading-none break-words w-full px-2 sm:px-0">
+          your<br className="sm:hidden" /> timeline.
         </div>
       </div>
     </section>
@@ -312,14 +312,14 @@ const Philosophy = () => {
 
 const ProcessCard = ({ title, desc, icon: Icon, index }) => {
   return (
-    <div className="process-card sticky top-0 h-screen w-full flex items-center justify-center origin-top">
-      <div className="w-[90%] max-w-5xl bg-cream rounded-[3rem] p-12 md:p-24 shadow-2xl flex flex-col md:flex-row items-center gap-16 border border-white/50">
-        <div className="flex-1">
-          <span className="text-gold font-mono text-sm tracking-widest font-semibold block mb-6">PHASE 0{index}</span>
-          <h2 className="font-outfit text-4xl md:text-6xl text-jade font-semibold mb-6 tracking-tight">{title}</h2>
-          <p className="text-charcoal/70 text-lg md:text-xl font-sans leading-relaxed">{desc}</p>
+    <div className="process-card sticky top-0 min-h-[100dvh] w-full flex items-center justify-center origin-top py-20 px-4 md:px-0">
+      <div className="w-full md:w-[90%] max-w-5xl bg-cream rounded-[2rem] md:rounded-[3rem] p-8 sm:p-12 md:p-24 shadow-2xl flex flex-col md:flex-row items-center gap-8 md:gap-16 border border-white/50">
+        <div className="flex-1 w-full text-center md:text-left">
+          <span className="text-gold font-mono text-xs sm:text-sm tracking-widest font-semibold block mb-4 md:mb-6">PHASE 0{index}</span>
+          <h2 className="font-outfit text-3xl sm:text-4xl md:text-6xl text-jade font-semibold mb-4 md:mb-6 tracking-tight break-words">{title}</h2>
+          <p className="text-charcoal/70 text-base sm:text-lg md:text-xl font-sans leading-relaxed">{desc}</p>
         </div>
-        <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-white flex items-center justify-center shadow-inner shrink-0 relative overflow-hidden">
+        <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full bg-white flex items-center justify-center shadow-inner shrink-0 relative overflow-hidden mt-4 md:mt-0">
           {Icon}
         </div>
       </div>
@@ -451,7 +451,7 @@ const PropertyForm = () => {
   const labelCls = "block text-sm font-semibold text-jade mb-2";
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-[3rem] p-8 md:p-16 shadow-[0_20px_60px_rgb(0,0,0,0.05)] border border-cream">
+    <form onSubmit={handleSubmit} className="bg-white rounded-[2rem] md:rounded-[3rem] p-6 sm:p-8 md:p-16 shadow-[0_20px_60px_rgb(0,0,0,0.05)] border border-cream max-w-full overflow-hidden">
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8 mb-8">
         <div>
@@ -523,9 +523,9 @@ const PropertyForm = () => {
       <div className="mb-8">
         <label className={labelCls}>Condition of Property</label>
         {errors.condition && <p className="text-red-500 text-xs mt-1 mb-2">{errors.condition}</p>}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {["Move-In Ready", "Needs Some Work", "Major Repairs Needed", "Uninhabitable"].map(cond => (
-            <label key={cond} className={`cursor-pointer border rounded-2xl p-4 text-center transition-all ${formData.condition === cond ? 'border-gold bg-gold/5 text-jade font-medium' : 'border-charcoal/10 hover:border-jade/30 text-charcoal/70 bg-white'}`}>
+            <label key={cond} className={`cursor-pointer border rounded-xl sm:rounded-2xl p-3 sm:p-4 text-center transition-all ${formData.condition === cond ? 'border-gold bg-gold/5 text-jade font-medium' : 'border-charcoal/10 hover:border-jade/30 text-charcoal/70 bg-white'}`}>
               <input type="radio" name="condition" value={cond} className="sr-only" onChange={handleChange} />
               <span className="text-sm">{cond}</span>
             </label>
@@ -570,9 +570,9 @@ const FormSection = () => {
   return (
     <section id="offer-portal" className="bg-cream py-32 px-6">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="font-drama italic text-5xl md:text-7xl text-jade mb-4">Get Your Free Cash Offer</h2>
-          <p className="font-sans text-xl text-charcoal/60">No fees. No commissions. No obligation.</p>
+        <div className="text-center mb-12 sm:mb-16 px-2">
+          <h2 className="font-drama italic text-4xl sm:text-5xl md:text-7xl text-jade mb-4 leading-tight break-words">Get Your Free Cash Offer</h2>
+          <p className="font-sans text-lg sm:text-xl text-charcoal/60">No fees. No commissions. No obligation.</p>
         </div>
         <PropertyForm />
       </div>
@@ -600,9 +600,9 @@ const SocialProof = () => {
   return (
     <section className="bg-white py-32 px-6 border-b border-cream">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-20">
-          <h2 className="font-drama italic text-5xl md:text-6xl text-jade mb-4">Trust Signals</h2>
-          <p className="text-charcoal/60 font-sans">Real closed deals. Real homeowners.</p>
+        <div className="text-center mb-12 sm:mb-20">
+          <h2 className="font-drama italic text-4xl sm:text-5xl md:text-6xl text-jade mb-4">Trust Signals</h2>
+          <p className="text-charcoal/60 font-sans text-base sm:text-lg">Real closed deals. Real homeowners.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <TestimonialCard
@@ -630,14 +630,14 @@ const Comparison = () => {
   return (
     <section className="bg-white py-32 px-6">
       <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="font-drama italic text-5xl text-jade mb-4">The Comparison</h2>
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="font-drama italic text-4xl sm:text-5xl text-jade mb-4">The Comparison</h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-charcoal/10 rounded-[3rem] overflow-hidden border border-charcoal/10">
-          <div className="bg-cream p-12">
-            <h3 className="font-outfit text-2xl text-charcoal/50 mb-8 font-medium">Traditional Sale</h3>
-            <ul className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-charcoal/10 rounded-[2rem] md:rounded-[3rem] overflow-hidden border border-charcoal/10">
+          <div className="bg-cream p-8 sm:p-12">
+            <h3 className="font-outfit text-xl sm:text-2xl text-charcoal/50 mb-6 sm:mb-8 font-medium">Traditional Sale</h3>
+            <ul className="space-y-4 sm:space-y-6">
               {[
                 "Agent commissions (6%)",
                 "Months on market",
@@ -645,16 +645,16 @@ const Comparison = () => {
                 "Uncertain closing date",
                 "Invasive open houses"
               ].map((item, i) => (
-                <li key={i} className="flex items-start gap-4 text-charcoal/60">
-                  <X className="w-6 h-6 text-red-400 shrink-0" />
-                  <span className="text-lg">{item}</span>
+                <li key={i} className="flex items-start gap-3 sm:gap-4 text-charcoal/60">
+                  <X className="w-5 h-5 sm:w-6 sm:h-6 text-red-400 shrink-0" />
+                  <span className="text-base sm:text-lg">{item}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="bg-jade text-white p-12">
-            <h3 className="font-outfit text-2xl text-gold mb-8 font-semibold">Jade Properties</h3>
-            <ul className="space-y-6">
+          <div className="bg-jade text-white p-8 sm:p-12">
+            <h3 className="font-outfit text-xl sm:text-2xl text-gold mb-6 sm:mb-8 font-semibold">Jade Properties</h3>
+            <ul className="space-y-4 sm:space-y-6">
               {[
                 "Zero fees or commissions",
                 "Close in 7–21 days",
@@ -662,9 +662,9 @@ const Comparison = () => {
                 "You choose closing date",
                 "Completely private process"
               ].map((item, i) => (
-                <li key={i} className="flex items-start gap-4">
-                  <Check className="w-6 h-6 text-gold shrink-0" />
-                  <span className="text-lg text-cream/90">{item}</span>
+                <li key={i} className="flex items-start gap-3 sm:gap-4">
+                  <Check className="w-5 h-5 sm:w-6 sm:h-6 text-gold shrink-0" />
+                  <span className="text-base sm:text-lg text-cream/90">{item}</span>
                 </li>
               ))}
             </ul>
@@ -726,7 +726,7 @@ const Footer = () => {
 
 export default function App() {
   return (
-    <div className="relative">
+    <div className="relative overflow-x-hidden">
       <Navbar />
       <Hero />
       <HowItWorks />
