@@ -103,13 +103,6 @@ const Hero = () => {
           >
             Get My Cash Offer Today
           </MagneticButton>
-          <div className="flex items-center gap-3 text-sm text-cream/70 font-mono mt-4 sm:mt-0 sm:py-4 break-words whitespace-normal text-center sm:text-left flex-wrap max-w-full">
-            <span className="relative flex h-3 w-3 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-            </span>
-            <span>OFFERS_ACTIVE — 24HR_RESPONSE</span>
-          </div>
         </div>
       </div>
     </section>
@@ -657,7 +650,7 @@ const Comparison = () => {
             <ul className="space-y-4 sm:space-y-6">
               {[
                 "Zero fees or commissions",
-                "Close in 7–21 days",
+                "Close in 30 Business days or less",
                 "As-is purchase (no repairs)",
                 "You choose closing date",
                 "Completely private process"
@@ -693,7 +686,7 @@ const Footer = () => {
             <div className="w-6 h-6 bg-gold shadow-sm shrink-0"></div>
             <span className="font-outfit font-semibold text-3xl tracking-tight">Jade Properties</span>
           </div>
-          <p className="font-drama italic text-2xl text-cream/70 mb-8">Fast. Fair. Hassle-Free.</p>
+          <p className="font-drama italic text-2xl text-cream/70 mb-8">We buy problems.</p>
 
           <div className="flex items-center gap-3 text-sm text-gold font-mono bg-black/20 inline-flex px-4 py-2 rounded-lg border border-white/5 whitespace-normal break-words max-w-full flex-wrap">
             <span className="relative flex h-2 w-2 shrink-0">
