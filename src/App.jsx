@@ -711,13 +711,52 @@ const Footer = () => {
           <div className="h-4"></div>
           <a href="#" className="text-cream/40 text-sm hover:text-white transition-colors">Privacy Policy</a>
           <a href="#" className="text-cream/40 text-sm hover:text-white transition-colors">Terms of Service</a>
+          <a href="/consent" className="text-cream/40 text-sm hover:text-white transition-colors">Communication Consent Policy</a>
         </div>
       </div>
     </footer>
   );
 };
 
+const ConsentPage = () => {
+  return (
+    <div className="min-h-screen bg-cream flex flex-col pb-[10vh]">
+      {/* Dark background for navbar visibility */}
+      <div className="w-full h-40 bg-jade/90 rounded-b-[2rem] shrink-0"></div>
+
+      <div className="flex-1 max-w-4xl mx-auto px-6 pb-20 -mt-16 w-full z-10">
+        <div className="bg-white rounded-[2rem] md:rounded-[3rem] p-8 md:p-16 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-charcoal/5">
+          <h1 className="font-drama italic text-4xl sm:text-5xl text-jade mb-8 border-b border-charcoal/5 pb-8">Communication Consent Policy</h1>
+          <div className="font-sans text-base sm:text-lg text-charcoal/70 space-y-6 leading-relaxed">
+            <p>
+              By submitting your information through any form or lead source associated with Jade Properties Group LLC, you agree to receive calls and text messages from Jade Properties Group LLC regarding property-related inquiries, offers, and updates. This may include follow-up messages about selling your property or related services you have expressed interest in.
+            </p>
+            <p>
+              Message and data rates may apply. You can opt out at any time by replying STOP to any text message we send or by contacting us directly to be removed.
+            </p>
+            <p>
+              Consent is not a condition of purchase or of doing business with Jade Properties Group LLC. Some leads may originate from third-party partners such as PropertyLeads.com, who pass your information to us after you request to be contacted.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function App() {
+  const path = window.location.pathname;
+
+  if (path === '/consent') {
+    return (
+      <div className="relative overflow-x-hidden w-full max-w-[100vw] bg-cream">
+        <Navbar />
+        <ConsentPage />
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="relative overflow-x-hidden w-full max-w-[100vw]">
       <Navbar />
