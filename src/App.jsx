@@ -711,7 +711,7 @@ const Footer = () => {
           <div className="h-4"></div>
           <a href="#" className="text-cream/40 text-sm hover:text-white transition-colors">Privacy Policy</a>
           <a href="#" className="text-cream/40 text-sm hover:text-white transition-colors">Terms of Service</a>
-          <a href="/consent" className="text-cream/40 text-sm hover:text-white transition-colors">Communication Consent Policy</a>
+          <a href="/consent.html" className="text-cream/40 text-sm hover:text-white transition-colors">Communication Consent Policy</a>
         </div>
       </div>
     </footer>
