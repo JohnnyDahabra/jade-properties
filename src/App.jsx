@@ -385,7 +385,8 @@ const PropertyForm = () => {
   const [formData, setFormData] = useState({
     name: '', phone: '', email: '',
     street: '', city: '', state: '', zip: '',
-    type: '', beds: '', baths: '', condition: '', reason: '', value: '', notes: ''
+    type: '', beds: '', baths: '', condition: '', reason: '', value: '', notes: '',
+    sms_consent: ''
   });
   const [photos, setPhotos] = useState([]);
   const [errors, setErrors] = useState({});
@@ -414,6 +415,7 @@ const PropertyForm = () => {
     if (!formData.email) newErrs.email = "Required";
     if (!formData.street) newErrs.street = "Required";
     if (!formData.condition) newErrs.condition = "Please select condition";
+    if (formData.sms_consent !== 'yes') newErrs.sms_consent = "Please agree to receive text messages";
     setErrors(newErrs);
     return Object.keys(newErrs).length === 0;
   };
@@ -550,6 +552,25 @@ const PropertyForm = () => {
             ))}
           </div>
         )}
+      </div>
+
+      <div className="mb-8">
+        <label style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', fontSize: '.9rem' }} className="text-charcoal/70">
+          <input
+            type="checkbox"
+            name="sms_consent"
+            value="yes"
+            required
+            checked={formData.sms_consent === 'yes'}
+            onChange={(e) => setFormData(p => ({ ...p, sms_consent: e.target.checked ? 'yes' : '' }))}
+          />
+          <span>I agree to receive text messages from Jade Properties about my
+          property inquiry. Msg &amp; data rates may apply. Msg frequency varies.
+          Reply STOP to opt out, HELP for help. See our{' '}
+          <a href="/sms-terms" target="_blank" className="text-jade underline">SMS Terms</a> and{' '}
+          <a href="/privacy" target="_blank" className="text-jade underline">Privacy Policy</a>.</span>
+        </label>
+        {errors.sms_consent && <p className="text-red-500 text-xs mt-1">{errors.sms_consent}</p>}
       </div>
 
       <MagneticButton type="submit" className="w-full bg-gold text-white font-outfit text-xl font-semibold py-5 rounded-2xl shadow-xl shadow-gold/20 flex justify-center items-center">
@@ -709,8 +730,8 @@ const Footer = () => {
           <span className="text-cream/70 cursor-not-allowed">hello@jadeproperties.com</span>
           <span className="text-cream/70 cursor-not-allowed">1-800-JADE-NOW</span>
           <div className="h-4"></div>
-          <a href="#" className="text-cream/40 text-sm hover:text-white transition-colors">Privacy Policy</a>
-          <a href="#" className="text-cream/40 text-sm hover:text-white transition-colors">Terms of Service</a>
+          <a href="/privacy" className="text-cream/40 text-sm hover:text-white transition-colors">Privacy Policy</a>
+          <a href="/sms-terms" className="text-cream/40 text-sm hover:text-white transition-colors">SMS Terms</a>
           <a href="/consent.html" className="text-cream/40 text-sm hover:text-white transition-colors">Communication Consent Policy</a>
         </div>
       </div>
