@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investor Property Alerts - Jade Properties</title>
+    <title>Sell Your House - Jade Properties</title>
     <style>
         body {
             font-family: system-ui, -apple-system, sans-serif;
@@ -22,7 +22,7 @@
         }
         p { color: #334155; }
         label { display: block; font-weight: 600; margin: 1rem 0 0.25rem; color: #1B4332; }
-        input[type="text"], input[type="tel"], input[type="email"] {
+        input[type="text"], input[type="tel"] {
             width: 100%;
             padding: 0.6rem;
             border: 1px solid #cbd5e1;
@@ -30,15 +30,6 @@
             font-size: 1rem;
             box-sizing: border-box;
         }
-        .consent {
-            display: flex;
-            gap: 0.6rem;
-            align-items: flex-start;
-            margin: 1.25rem 0;
-            font-size: 0.9rem;
-            color: #334155;
-        }
-        .consent input { margin-top: 0.25rem; }
         button {
             background: #1B4332;
             color: #fff;
@@ -47,6 +38,7 @@
             padding: 0.75rem 1.5rem;
             font-size: 1rem;
             cursor: pointer;
+            margin-top: 1.25rem;
         }
         .hp { position: absolute; left: -9999px; opacity: 0; height: 0; overflow: hidden; }
         .notice {
@@ -57,48 +49,43 @@
         }
         .notice.ok { background: #e7f3ec; color: #1B4332; border: 1px solid #1B433240; }
         .notice.err { background: #fdecea; color: #8c3b2e; border: 1px solid #8c3b2e40; }
+        .disclosure { font-size: 0.85rem; color: #475569; margin-top: 1rem; }
         .fine { font-size: 0.8rem; color: #64748b; margin-top: 1.5rem; }
         a { color: #1B4332; }
     </style>
 </head>
 <body>
-    <h1>Off-Market Property Alerts</h1>
-    <p>Investors: tell us what you buy and we'll text you when we have an off-market property that matches your criteria.</p>
+    <h1>Get a Cash Offer for Your House</h1>
+    <p>Tell us about your property and we'll reach out about a no-obligation cash offer. Any condition, any situation.</p>
 
-    <div id="ok" class="notice ok">You're on the list. We'll text you when a matching property comes up. Reply STOP any time to opt out.</div>
+    <div id="ok" class="notice ok">Got it - we'll be in touch about your property shortly.</div>
     <div id="err" class="notice err">Something didn't go through. Please check your phone number and try again.</div>
 
-    <form method="POST" action="https://lead-tracker-c54.pages.dev/api/investors/signup">
+    <form method="POST" action="https://lead-tracker-c54.pages.dev/api/sellers/inquiry">
         <label for="name">Name</label>
         <input type="text" id="name" name="name" maxlength="200" autocomplete="name">
 
         <label for="phone">Mobile phone (required)</label>
         <input type="tel" id="phone" name="phone" required maxlength="20" autocomplete="tel" placeholder="(555) 555-5555">
 
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" maxlength="200" autocomplete="email">
-
-        <label for="markets">What do you buy? (markets, property types, price range)</label>
-        <input type="text" id="markets" name="markets" maxlength="300" placeholder="e.g. single-family in Wayne County MI under $150k">
+        <label for="address">Property address</label>
+        <input type="text" id="address" name="address" maxlength="300" autocomplete="street-address" placeholder="123 Main St, City, State">
 
         <div class="hp" aria-hidden="true">
             <label for="company_website">Company website</label>
             <input type="text" id="company_website" name="company_website" tabindex="-1" autocomplete="off">
         </div>
 
-        <div class="consent">
-            <input type="checkbox" id="consent" name="consent" value="yes">
-            <label for="consent" style="font-weight:400;margin:0;">
-                By checking this box and submitting, I agree to receive recurring marketing and
-                informational text messages (such as off-market property alerts) from Jade Properties
-                Group LLC at the mobile number provided. Consent is not a condition of any purchase.
-                Message frequency varies. Message and data rates may apply. Reply STOP to opt out or
-                HELP for help at any time.
-            </label>
-        </div>
-        <input type="hidden" name="consent_text" value="I agree to receive recurring marketing and informational text messages (such as off-market property alerts) from Jade Properties Group LLC at the mobile number provided. Consent is not a condition of any purchase. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for help at any time.">
+        <button type="submit">Request my cash offer</button>
 
-        <button type="submit">Get property alerts</button>
+        <p class="disclosure">
+            By submitting this form, you provide your express written consent for Jade Properties
+            Group LLC to contact you at the number provided by phone call and text message about
+            your property inquiry, including offers and updates. Consent is not a condition of any
+            purchase or of doing business with us. Message frequency varies. Message and data rates
+            may apply. Reply STOP to any text to opt out, or HELP for help.
+        </p>
+        <input type="hidden" name="consent_text" value="By submitting this form, you provide your express written consent for Jade Properties Group LLC to contact you at the number provided by phone call and text message about your property inquiry, including offers and updates. Consent is not a condition of any purchase. Message frequency varies. Message and data rates may apply. Reply STOP to any text to opt out, or HELP for help.">
     </form>
 
     <p class="fine">
